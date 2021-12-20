@@ -11,16 +11,14 @@ IMAGES = {}
 '''
 Iinitalize a global dictionary of images. This will be called once to save time
 '''
-
 def loadImages():
   pieces = ['wp', 'wR', 'wN', 'wB', 'wK', 'wQ', 'bp', 'bN', 'bB', 'bK', 'bQ', 'bR']
   for piece in pieces:
     IMAGES[piece] = py.transform.scale(py.image.load('chess/assets/' + piece + '.png'), (SQ_SIZE, SQ_SIZE))
 
 '''
-This will be main driver, handle user input and update graphics
+This will be main driver, handles user input and update graphics
 '''
-
 def main():
   py.init()
   screen = py.display.set_mode((WITDH, HEIGHT))
@@ -38,10 +36,10 @@ def main():
     clock.tick(MAX_FPS)
     py.display.flip()
 
+
 '''
 Responisble for all the grapgics within the current gamestate.
 '''
-
 def drawGameState(screen, gs):
   drawBoard(screen) #draw squares on board
   drawPieces(screen, gs.board) # draw pieces on top of the square
@@ -54,7 +52,11 @@ def drawBoard(screen):
       py.draw.rect(screen, colour, py.Rect(c*SQ_SIZE, r*SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
 def drawPieces(screen, board):
-  pass
+    for r in range(DIMENSION):
+      for c in range(DIMENSION):
+        piece = board[r][c]
+        if piece != "--":
+          screen.blit(IMAGES[piece], py.Rect(c*SQ_SIZE, r*SQ_SIZE, SQ_SIZE, SQ_SIZE))
 
 if __name__ == '__main__':
   main()
